@@ -11,9 +11,10 @@ export class SimpleAutocomplete extends HTMLElement {
     `;
     const inputSlot = this.shadowRoot.querySelector('slot[name="input"]');
     const input = inputSlot.assignedElements().length > 0 ? inputSlot.assignedElements()[0] : undefined;
+    const debounceMs = this.getAttribute('debounce') ? parseInt(this.getAttribute('debounce')) : 300;
     input.addEventListener('input',
       debounce((e) => this.dispatchEvent(
-        new CustomEvent('autocomplete-search', { detail: { query: input.value } })), 300));
+        new CustomEvent('autocomplete-search', { detail: { query: input.value } })), debounceMs));
     const listSlot = this.shadowRoot.querySelector('slot[name="list"]');
     const list = listSlot.assignedElements().length > 0 ? listSlot.assignedElements()[0] : undefined;
     const combobox = new Combobox(input, list)
