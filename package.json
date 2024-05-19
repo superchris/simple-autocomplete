@@ -1,5 +1,5 @@
 {
-  "name": "simple-autocomplete",
+  "name": "@launchscout/simple-autocomplete",
   "version": "0.0.1",
   "description": "A simple, event oriented autocomplete custom element",
   "main": "src/simple-autocomplete.js",
