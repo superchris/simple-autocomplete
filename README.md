@@ -4,6 +4,12 @@ This custom element implements an autocomplete (aka combobox) custom element. Fa
 
 The intended usage pattern for this element is to handle the events dispatched by this element(see below), use the data in said events to obtain the current list of items, and populate the list of items as inner content in the `list` slot (see below).
 
+## Installation
+
+```
+npm install @launchscout/simple-autocomplete
+```
+
 ## Slots
 
 This element requires the user to provide content in the following named slots:
