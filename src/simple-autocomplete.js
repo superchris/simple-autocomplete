@@ -2,6 +2,8 @@ import Combobox from '@github/combobox-nav';
 import debounce from 'debounce';
 
 export class SimpleAutocomplete extends HTMLElement {
+  static formAssociated = true;
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -14,9 +16,12 @@ export class SimpleAutocomplete extends HTMLElement {
       debounce((e) => this.dispatchEvent(
         new CustomEvent('autocomplete-search', { detail: { query: this.searchInput.value } })), debounceMs));
     this.list.addEventListener("combobox-commit", ({detail, target}) => {
+      this.searchInput.value = target.dataset.label;
+      this.elementInternals.setFormValue(target.dataset.value);
       if (this.getAttribute('clear-on-select')) {this.searchInput.value = '';}
       this.dispatchEvent(new CustomEvent('autocomplete-commit', {detail: target.dataset, bubbles: true}));
     })
+    this.elementInternals = this.attachInternals();
   }
 
   get list() {
@@ -35,6 +40,10 @@ export class SimpleAutocomplete extends HTMLElement {
 
   connectedCallback() {
     this.initializeComboBox();
+  }
+
+  disconnectedCallback() {
+    this.combobox.stop();
   }
 
   get searchInput() {

@@ -29,14 +29,6 @@
       import './src/simple-autocomplete.js'
     </script>
     <style>
-      auto-complete [aria-selected='true'],
-      auto-complete [role='option']:hover {
-        background-color: lavender;
-      }
-  
-      auto-complete [aria-disabled='true'] {
-        color: grey;
-      }
       simple-autocomplete [aria-selected='true'],
       simple-autocomplete [role='option']:hover {
         background-color: lavender;
@@ -63,14 +55,20 @@
           <li :each="person in selected_people" :text="person.first_name + ' ' + person.last_name"></li>
         </ul>
       </div>
-      <simple-autocomplete :sendautocomplete-commit="choose-person" :sendautocomplete-search="search" clear-on-select="true" debounce="700">
-        <input slot="input" type="search" name="query" autocomplete="off" />
-        <ul slot="list">
-          <li :each="person in people" :data-person-id="person.id" role="option" :text="person.first_name + ' ' + person.last_name"></li> 
-        </ul>
-      </simple-autocomplete>
+      <form :sendsubmit="send_it">
+        <div><label>Foo</label><input name="foo" /></div>
+        <div>
+          <label>Person</label>
+          <simple-autocomplete name="person_id" :sendautocomplete-search="search" debounce="700">
+            <ul slot="list">
+              <li :each="person in people" :data-label="person.first_name + ' ' + person.last_name" :data-person-id="person.id" :data-value="person.id" role="option" :text="person.first_name + ' ' + person.last_name"></li> 
+            </ul>
+          </simple-autocomplete>    
+        </div>
+        <button>Save</button>
+      </form>
       <ul id="dalist">
-        <li :each="person in people" :data-person-id="person.id" role="option" :text="person.first_name + ' ' + person.last_name"></li> 
+        <li :each="person in people" :data-value="person.id" role="option" :text="person.first_name + ' ' + person.last_name"></li> 
       </ul>
     </live-template>
     <script type="module">
