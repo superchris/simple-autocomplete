@@ -42,8 +42,15 @@
         background-color: lavender;
       }
   
+      #dalist [aria-selected='true'],
+      #dalist [role='option']:hover {
+        background-color: lavender;
+      }
       simple-autocomplete [aria-disabled='true'] {
         color: grey;
+      }
+      #dalist {
+        background-color: aquamarine;
       }
 
     </style>
@@ -62,6 +69,15 @@
           <li :each="person in people" :data-person-id="person.id" role="option" :text="person.first_name + ' ' + person.last_name"></li> 
         </ul>
       </simple-autocomplete>
+      <ul id="dalist">
+        <li :each="person in people" :data-person-id="person.id" role="option" :text="person.first_name + ' ' + person.last_name"></li> 
+      </ul>
     </live-template>
+    <script type="module">
+      document.querySelector('simple-autocomplete').addEventListener('autocomplete-commit', (event) => {
+        console.log(event.target.dataset);
+        console.log(event.detail);
+      })
+    </script>
   </body>
 </html>
