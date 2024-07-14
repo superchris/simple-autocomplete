@@ -1,15 +1,20 @@
 {
-  "name": "@launchscout/simple-autocomplete",
+  "name": "@launchscout/autocomplete-input",
   "version": "0.0.1",
   "description": "A simple, event oriented autocomplete custom element",
-  "main": "src/simple-autocomplete.js",
+  "main": "src/autocomplete-input.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "web-test-runner \"test/**/*.test.js\" --node-resolve"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@github/combobox-nav": "^3.0.1",
-    "debounce": "^2.0.0"
+    "@github/combobox-nav": "^3.0.1"
+  },
+  "devDependencies": {
+    "@esm-bundle/chai": "^4.3.4-fix.0",
+    "@open-wc/testing": "^4.0.0",
+    "@web/test-runner": "^0.18.2",
+    "chai-dom": "^1.12.0"
   }
 }

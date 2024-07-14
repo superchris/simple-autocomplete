@@ -41,6 +41,9 @@
       simple-autocomplete [aria-disabled='true'] {
         color: grey;
       }
+      simple-autocomplete:state(closed) ul {
+        display: none;
+      }
       #dalist {
         background-color: aquamarine;
       }
@@ -63,7 +66,7 @@
             <ul slot="list">
               <li :each="person in people" :data-label="person.first_name + ' ' + person.last_name" :data-person-id="person.id" :data-value="person.id" role="option" :text="person.first_name + ' ' + person.last_name"></li> 
             </ul>
-          </simple-autocomplete>    
+          </simple-autocomplete>
         </div>
         <button>Save</button>
       </form>
