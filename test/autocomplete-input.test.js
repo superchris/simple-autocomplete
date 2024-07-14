@@ -9,7 +9,7 @@ it('renders an input', async () => {
   expect(el.shadowRoot.querySelector('input')).to.exist;
 })
 
-it('emits an autocomplte-search event', async () => {
+it('emits an autocomplete-search event', async () => {
   const el = await fixture(`
     <autocomplete-input name="foo"></autocomplete-input>
   `);
@@ -38,7 +38,7 @@ describe('the combobox', () => {
     option.click();
   });
 
-  it('sets the value on the form', async () => {
+  it('sets the value on the form when an option is clicked', async () => {
     const formElement = await fixture(`
         <form>
           <autocomplete-input name="foo">
@@ -50,6 +50,19 @@ describe('the combobox', () => {
       `);
     const option = formElement.querySelector('li[data-value="bar"]');
     option.click();
+    expect(new FormData(formElement).get('foo')).to.eq('bar')
+  });
+
+  it('sets form value from value attribute', async () => {
+    const formElement = await fixture(`
+      <form>
+        <autocomplete-input name="foo" value="bar">
+          <ul slot="list">
+            <li role="option" data-value="bar">Bar</li>
+          </ul>
+        </autocomplete-input>
+      </form>
+    `);
     expect(new FormData(formElement).get('foo')).to.eq('bar')
   });
 });

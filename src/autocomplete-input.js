@@ -4,11 +4,13 @@ import debounce from './debounce.js';
 export class AutocompleteInputElement extends HTMLElement {
   static formAssociated = true;
 
+  static observedAttributes = ['value', 'display-value'];
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
-    <input name=${this.getAttribute('name')} part="input">
+    <input name="${this.getAttribute('name')}" value="${this.getAttribute('display-value')}" part="input">
     <slot name="list"></slot>
     `;
     const debounceMs = this.getAttribute('debounce') ? parseInt(this.getAttribute('debounce')) : 300;
@@ -49,7 +51,19 @@ export class AutocompleteInputElement extends HTMLElement {
   }
 
   connectedCallback() {
+    if (this.elementInternals.form && this.getAttribute("value")) {
+      this.elementInternals.setFormValue(this.getAttribute("value"));
+    }
     this.initializeComboBox();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name == 'value') {
+      this.elementInternals.setFormValue(newValue);
+    }
+    if (name == 'display-value') {
+      this.searchInput.value = newValue;
+    }
   }
 
   disconnectedCallback() {
